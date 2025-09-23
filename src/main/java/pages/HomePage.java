@@ -29,5 +29,5 @@ public class HomePage extends BasePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(signupLoginButton));
         BaseTest.createStep("Navegando a la pagina de AutomationExercise", true, true, IMMEDIATE);
     }
-
+//prueba de push
 }
