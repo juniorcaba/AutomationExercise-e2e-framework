@@ -9,7 +9,8 @@ Framework de automatización para pruebas E2E del sitio [AutomationExercise.com]
 
 Este proyecto automatiza los [26 test cases oficiales](https://automationexercise.com/test_cases) definidos por el sitio, cubriendo escenarios completos de e-commerce desde el registro de usuarios hasta procesos de compra avanzados.
 
-![AutomationExercise Homepage](images/homepage-preview.png)
+<img width="1920" height="911" alt="image" src="https://github.com/user-attachments/assets/f7b7039c-d493-43df-ba39-544877156c4b" />
+
 *Página principal de AutomationExercise.com - Sitio bajo automatización*
 
 ## Arquitectura
@@ -88,51 +89,6 @@ El framework cubre los **26 test cases oficiales** disponibles en [automationexe
    implicit.wait=10
    ```
 
-## Ejecución
-
-### Ejecutar todas las pruebas
-```bash
-mvn clean test
-```
-
-### Ejecutar pruebas específicas
-```bash
-# Por clase
-mvn test -Dtest=LoginTest
-
-# Por método
-mvn test -Dtest=LoginTest#testValidLogin
-
-# Por grupos de TestNG
-mvn test -Dgroups=smoke
-```
-
-### Parámetros de ejecución
-```bash
-# Cambiar navegador
-mvn test -Dbrowser=firefox
-
-# Ejecución en modo headless
-mvn test -Dheadless=true
-```
-
-## Estructura del Proyecto
-
-```
-src/
-├── main/java/
-│   ├── pages/          # Page Objects
-│   ├── utils/          # Helpers y utilidades
-│   └── config/         # Configuraciones
-├── test/java/
-│   ├── tests/          # Casos de prueba
-│   └── base/           # Clases base para pruebas
-├── reports/            # Reportes HTML generados
-└── resources/
-    ├── config.properties
-    └── testng.xml
-```
-
 ## Características Destacadas
 
 ### Manejo Robusto de Errores
@@ -173,5 +129,3 @@ Las contribuciones son bienvenidas. Para contribuir:
 ## Contacto
 
 **Héctor Caba** - Automation Engineer
-
-¿Tienes preguntas o sugerencias? No dudes en abrir un issue o contactarme directamente.
