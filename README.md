@@ -5,9 +5,9 @@
 [![TestNG](https://img.shields.io/badge/TestNG-7.8.0-red.svg)](https://testng.org/)
 [![Maven](https://img.shields.io/badge/Maven-3.6+-blue.svg)](https://maven.apache.org/)
 
-Framework de automatización para pruebas E2E del sitio [AutomationExercise.com](https://automationexercise.com), implementado con Selenium WebDriver, Java y TestNG.
+Framework de automatización para pruebas E2E del sitio [AutomationExercise.com](https://automationexercise.com), implementado con Selenium WebDriver, Java y TestNG. 
 
-<img width="1920" height="911" alt="image" src="https://github.com/user-attachments/assets/efebd92d-979c-4ce3-966f-b53afb901521" />
+Este proyecto automatiza los [26 test cases oficiales](https://automationexercise.com/test_cases) definidos por el sitio, cubriendo escenarios completos de e-commerce desde el registro de usuarios hasta procesos de compra avanzados.
 
 ## Arquitectura
 
@@ -32,12 +32,29 @@ HomePage(getDriver())
 
 ## Funcionalidades Cubiertas
 
-- ✅ Registro de nuevos usuarios
-- ✅ Login/Logout de usuarios existentes
-- ✅ Navegación por catálogo de productos
-- ✅ Gestión del carrito de compras
-- ✅ Proceso completo de checkout
-- ✅ Validaciones de UI y funcionalidad
+Este framework implementa los **26 test cases oficiales** de AutomationExercise.com, incluyendo:
+
+- ✅ **Gestión de usuarios** - Registro, login/logout, validaciones de email
+- ✅ **Navegación y búsqueda** - Catálogo de productos, filtros por categoría/marca
+- ✅ **Carrito de compras** - Agregar/remover productos, validaciones de cantidad
+- ✅ **Proceso de checkout** - Múltiples flujos de compra (registro durante/antes del checkout)
+- ✅ **Funcionalidades avanzadas** - Descarga de facturas, reviews de productos, suscripciones
+- ✅ **Validaciones UI/UX** - Scroll automático, elementos recomendados, formulario de contacto
+
+## Test Cases Implementados
+
+El framework cubre los **26 test cases oficiales** disponibles en [automationexercise.com/test_cases](https://automationexercise.com/test_cases):
+
+| Rango | Descripción | Casos |
+|-------|-------------|-------|
+| **TC01-TC05** | Gestión de usuarios (registro, login, validaciones) | 5 casos |
+| **TC06-TC07** | Formularios y navegación (contacto, test cases page) | 2 casos |
+| **TC08-TC11** | Productos y suscripciones (búsqueda, detalles) | 4 casos |
+| **TC12-TC17** | Carrito de compras (agregar, quitar, cantidades) | 6 casos |
+| **TC18-TC22** | Categorías, marcas y reviews | 5 casos |
+| **TC23-TC26** | Checkout avanzado y funcionalidades UI | 4 casos |
+
+> 📋 **Todos los casos están implementados siguiendo exactamente los pasos definidos en el sitio oficial**
 
 ## Instalación y Configuración
 
@@ -68,6 +85,51 @@ HomePage(getDriver())
    implicit.wait=10
    ```
 
+## Ejecución
+
+### Ejecutar todas las pruebas
+```bash
+mvn clean test
+```
+
+### Ejecutar pruebas específicas
+```bash
+# Por clase
+mvn test -Dtest=LoginTest
+
+# Por método
+mvn test -Dtest=LoginTest#testValidLogin
+
+# Por grupos de TestNG
+mvn test -Dgroups=smoke
+```
+
+### Parámetros de ejecución
+```bash
+# Cambiar navegador
+mvn test -Dbrowser=firefox
+
+# Ejecución en modo headless
+mvn test -Dheadless=true
+```
+
+## Estructura del Proyecto
+
+```
+src/
+├── main/java/
+│   ├── pages/          # Page Objects
+│   ├── utils/          # Helpers y utilidades
+│   └── config/         # Configuraciones
+├── test/java/
+│   ├── tests/          # Casos de prueba
+│   └── base/           # Clases base para pruebas
+├── reports/            # Reportes HTML generados
+└── resources/
+    ├── config.properties
+    └── testng.xml
+```
+
 ## Características Destacadas
 
 ### Manejo Robusto de Errores
@@ -93,8 +155,20 @@ Cada reporte incluye:
 - Screenshots automáticos en caso de fallos
 - Logs detallados de la ejecución
 
+## Contribución
+
+Las contribuciones son bienvenidas. Para contribuir:
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
+3. Commit tus cambios (`git commit -m 'Agregar nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Abre un Pull Request
+
 ---
 
 ## Contacto
 
 **Héctor Caba** - Automation Engineer
+
+¿Tienes preguntas o sugerencias? No dudes en abrir un issue o contactarme directamente.
