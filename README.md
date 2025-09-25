@@ -14,9 +14,9 @@ El proyecto utiliza **Page Object Model** con **Fluent Interface** para crear pr
 ```java
 // Ejemplo de Fluent Interface
 HomePage(getDriver())
-                .navigateToHome()
-                .verifyHomePageLoaded()
-                .clickSignupLogin()
+    .navigateToHome()
+    .verifyHomePageLoaded()
+    .clickSignupLogin()
 ```
 
 ## Stack Tecnológico
@@ -80,18 +80,18 @@ Parámetros centralizados en archivos `.properties` para fácil mantenimiento.
 ### Integración CI/CD Ready
 Compatible con Jenkins, GitHub Actions y otros sistemas de integración continua.
 
-##Reportes
-Los reportes se generan automáticamente en la carpeta reports/ con el formato:
+## Reportes
 
-ExtentReport_YYYY-MM-DD_HH-mm-ss.html - Reportes HTML detallados con screenshots integrados
+Los reportes se generan automáticamente en la carpeta `reports/` con el formato:
+- `ExtentReport_YYYY-MM-DD_HH-mm-ss.html` - Reportes HTML detallados con screenshots integrados
 
 Cada reporte incluye:
+- Resumen ejecutivo de las pruebas
+- Detalles paso a paso de cada test
+- Screenshots automáticos en caso de fallos
+- Logs detallados de la ejecución
 
-Resumen ejecutivo de las pruebas
-Detalles paso a paso de cada test
-Screenshots automáticos en caso de fallos
-Logs detallados de la ejecución
-
+---
 
 ## Contacto
 
