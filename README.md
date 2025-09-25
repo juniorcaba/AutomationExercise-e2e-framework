@@ -108,7 +108,7 @@ Compatible con Jenkins, GitHub Actions y otros sistemas de integración continua
 
 Los reportes se generan automáticamente en la carpeta `reports/` con el formato:
 - `ExtentReport_YYYY-MM-DD_HH-mm-ss.html` - Reportes HTML detallados con screenshots integrados.
-  <img width="1920" height="951" alt="image" src="https://github.com/user-attachments/assets/3a720ed3-cf7c-470c-97cc-b613adadc2d0" />
+<img width="1920" height="951" alt="image" src="https://github.com/user-attachments/assets/3a720ed3-cf7c-470c-97cc-b613adadc2d0" />
 Ejemplo de reporte generado por ExtentReports
 
 Cada reporte incluye:
