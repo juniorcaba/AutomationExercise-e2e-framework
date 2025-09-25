@@ -80,24 +80,19 @@ Parámetros centralizados en archivos `.properties` para fácil mantenimiento.
 ### Integración CI/CD Ready
 Compatible con Jenkins, GitHub Actions y otros sistemas de integración continua.
 
-## Reportes
+##Reportes
+Los reportes se generan automáticamente en la carpeta reports/ con el formato:
 
-Los reportes se generan automáticamente en:
-- `target/extent-reports/` - Reportes HTML detallados
-- `target/screenshots/` - Screenshots de fallos
+ExtentReport_YYYY-MM-DD_HH-mm-ss.html - Reportes HTML detallados con screenshots integrados
 
-## Contribución
+Cada reporte incluye:
 
-Las contribuciones son bienvenidas. Para contribuir:
+Resumen ejecutivo de las pruebas
+Detalles paso a paso de cada test
+Screenshots automáticos en caso de fallos
+Logs detallados de la ejecución
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit tus cambios (`git commit -m 'Agregar nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Abre un Pull Request
 
 ## Contacto
 
-**Héctor** - Automation Engineer
-
-¿Tienes preguntas o sugerencias? No dudes en abrir un issue o contactarme directamente.
+**Héctor Caba** - Automation Engineer
