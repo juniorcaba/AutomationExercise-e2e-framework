@@ -5,12 +5,11 @@
 [![TestNG](https://img.shields.io/badge/TestNG-7.8.0-red.svg)](https://testng.org/)
 [![Maven](https://img.shields.io/badge/Maven-3.6+-blue.svg)](https://maven.apache.org/)
 
-Framework de automatización para pruebas E2E del sitio [AutomationExercise.com](https://automationexercise.com), implementado con Selenium WebDriver, Java y TestNG. 
+Framework de automatización para pruebas E2E del sitio AutomationExercise.com, implementado con Selenium WebDriver, Java y TestNG.
 
-Este proyecto automatiza los [26 test cases oficiales](https://automationexercise.com/test_cases) definidos por el sitio, cubriendo escenarios completos de e-commerce desde el registro de usuarios hasta procesos de compra avanzados.
+Este proyecto automatiza los 26 test cases oficiales definidos por el sitio, cubriendo escenarios completos de e-commerce desde el registro de usuarios hasta procesos de compra avanzados.
 
 <img width="1920" height="911" alt="image" src="https://github.com/user-attachments/assets/f7b7039c-d493-43df-ba39-544877156c4b" />
-
 *Página principal de AutomationExercise.com - Sitio bajo automatización*
 
 ## Arquitectura
@@ -48,6 +47,8 @@ Este framework implementa los **26 test cases oficiales** de AutomationExercise.
 ## Test Cases Implementados
 
 El framework cubre los **26 test cases oficiales** disponibles en [automationexercise.com/test_cases](https://automationexercise.com/test_cases):
+<img width="1920" height="911" alt="image" src="https://github.com/user-attachments/assets/cc7337f0-29df-4ac4-b890-1d1c34e2f39d" />
+Lista oficial de test cases de AutomationExercise.com
 
 | Rango | Descripción | Casos |
 |-------|-------------|-------|
@@ -106,7 +107,9 @@ Compatible con Jenkins, GitHub Actions y otros sistemas de integración continua
 ## Reportes
 
 Los reportes se generan automáticamente en la carpeta `reports/` con el formato:
-- `ExtentReport_YYYY-MM-DD_HH-mm-ss.html` - Reportes HTML detallados con screenshots integrados
+- `ExtentReport_YYYY-MM-DD_HH-mm-ss.html` - Reportes HTML detallados con screenshots integrados.
+  <img width="1920" height="951" alt="image" src="https://github.com/user-attachments/assets/3a720ed3-cf7c-470c-97cc-b613adadc2d0" />
+Ejemplo de reporte generado por ExtentReports
 
 Cada reporte incluye:
 - Resumen ejecutivo de las pruebas
