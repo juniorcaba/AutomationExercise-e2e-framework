@@ -6,7 +6,8 @@
 [![Maven](https://img.shields.io/badge/Maven-3.6+-blue.svg)](https://maven.apache.org/)
 
 Framework de automatización para pruebas E2E del sitio [AutomationExercise.com](https://automationexercise.com), implementado con Selenium WebDriver, Java y TestNG.
-![AutomationExercise Homepage](screenshots/homepage-preview.png)
+<img width="1920" height="911" alt="image" src="https://github.com/user-attachments/assets/efebd92d-979c-4ce3-966f-b53afb901521" />
+
 ## Arquitectura
 
 El proyecto utiliza **Page Object Model** con **Fluent Interface** para crear pruebas mantenibles y escalables. Cada página tiene su propia clase con métodos que permiten encadenar acciones de forma natural.
