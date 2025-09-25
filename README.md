@@ -5,7 +5,7 @@
 [![TestNG](https://img.shields.io/badge/TestNG-7.8.0-red.svg)](https://testng.org/)
 [![Maven](https://img.shields.io/badge/Maven-3.6+-blue.svg)](https://maven.apache.org/)
 
-Framework de automatización end-to-end para [AutomationExercise.com](https://automationexercise.com/), desarrollado con Selenium WebDriver, Java y TestNG. Implementa el patrón Page Object Model con Fluent Interface para crear pruebas robustas y mantenibles.
+Este repositorio contiene las pruebas automatizadas para el sitio [AutomationExercise.com](https://automationexercise.com). El objetivo es validar los flujos principales del sitio usando Selenium WebDriver con Java y TestNG.
 
 ## 🎯 Características principales
 
@@ -29,11 +29,6 @@ Framework de automatización end-to-end para [AutomationExercise.com](https://au
 | WebDriverManager | 5.6.2 | Gestión de drivers |
 | Maven | 3.6+ | Gestión de dependencias |
 
-
-# Proyecto de Automatización: AutomationExercise
-
-Este repositorio contiene las pruebas automatizadas para el sitio [AutomationExercise.com](https://automationexercise.com). El objetivo es validar los flujos principales del sitio usando Selenium WebDriver con Java y TestNG.
-
 ## ¿Qué incluye?
 
 - Pruebas de registro de usuario
@@ -42,13 +37,4 @@ Este repositorio contiene las pruebas automatizadas para el sitio [AutomationExe
 - Agregar al carrito y proceso de compra
 - Validaciones básicas de UI
 
-## Tecnologías
-
-- Java 21
-- Selenium WebDriver 4.15
-- TestNG
-- Maven para gestión de dependencias
-- WebDriverManager para manejar los drivers automáticamente
-
-## Estructura del proyecto
 
