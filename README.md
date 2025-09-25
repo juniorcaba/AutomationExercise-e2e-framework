@@ -66,50 +66,6 @@ HomePage(getDriver())
    implicit.wait=10
    ```
 
-## Ejecución
-
-### Ejecutar todas las pruebas
-```bash
-mvn clean test
-```
-
-### Ejecutar pruebas específicas
-```bash
-# Por clase
-mvn test -Dtest=LoginTest
-
-# Por método
-mvn test -Dtest=LoginTest#testValidLogin
-
-# Por grupos de TestNG
-mvn test -Dgroups=smoke
-```
-
-### Parámetros de ejecución
-```bash
-# Cambiar navegador
-mvn test -Dbrowser=firefox
-
-# Ejecución en modo headless
-mvn test -Dheadless=true
-```
-
-## Estructura del Proyecto
-
-```
-src/
-├── main/java/
-│   ├── pages/          # Page Objects
-│   ├── utils/          # Helpers y utilidades
-│   └── config/         # Configuraciones
-├── test/java/
-│   ├── tests/          # Casos de prueba
-│   └── base/           # Clases base para pruebas
-└── resources/
-    ├── config.properties
-    └── testng.xml
-```
-
 ## Características Destacadas
 
 ### Manejo Robusto de Errores
