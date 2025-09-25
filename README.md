@@ -28,3 +28,27 @@ Framework de automatización end-to-end para [AutomationExercise.com](https://au
 | ExtentReports | 5.1.1 | Generación de reportes |
 | WebDriverManager | 5.6.2 | Gestión de drivers |
 | Maven | 3.6+ | Gestión de dependencias |
+
+
+# Proyecto de Automatización: AutomationExercise
+
+Este repositorio contiene las pruebas automatizadas para el sitio [AutomationExercise.com](https://automationexercise.com). El objetivo es validar los flujos principales del sitio usando Selenium WebDriver con Java y TestNG.
+
+## ¿Qué incluye?
+
+- Pruebas de registro de usuario
+- Login y logout
+- Navegación por productos
+- Agregar al carrito y proceso de compra
+- Validaciones básicas de UI
+
+## Tecnologías
+
+- Java 21
+- Selenium WebDriver 4.15
+- TestNG
+- Maven para gestión de dependencias
+- WebDriverManager para manejar los drivers automáticamente
+
+## Estructura del proyecto
+
