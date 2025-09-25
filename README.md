@@ -9,6 +9,9 @@ Framework de automatización para pruebas E2E del sitio [AutomationExercise.com]
 
 Este proyecto automatiza los [26 test cases oficiales](https://automationexercise.com/test_cases) definidos por el sitio, cubriendo escenarios completos de e-commerce desde el registro de usuarios hasta procesos de compra avanzados.
 
+![AutomationExercise Homepage](images/homepage-preview.png)
+*Página principal de AutomationExercise.com - Sitio bajo automatización*
+
 ## Arquitectura
 
 El proyecto utiliza **Page Object Model** con **Fluent Interface** para crear pruebas mantenibles y escalables. Cada página tiene su propia clase con métodos que permiten encadenar acciones de forma natural.
