@@ -5,111 +5,144 @@
 [![TestNG](https://img.shields.io/badge/TestNG-7.8.0-red.svg)](https://testng.org/)
 [![Maven](https://img.shields.io/badge/Maven-3.6+-blue.svg)](https://maven.apache.org/)
 
-Este repositorio contiene las pruebas automatizadas para el sitio [AutomationExercise.com](https://automationexercise.com). El objetivo es validar los flujos principales del sitio usando Selenium WebDriver con Java y TestNG.
+Framework de automatización para pruebas E2E del sitio [AutomationExercise.com](https://automationexercise.com), implementado con Selenium WebDriver, Java y TestNG.
 
-## 🎯 Características principales
+## Arquitectura
 
-- **Page Object Model (POM)** con Fluent Interface
-- **Manejo robusto de errores** con try-catch y validaciones
-- **Reporting avanzado** con ExtentReports
-- **WebDriverManager** para gestión automática de drivers
-- **Helpers reutilizables** para operaciones comunes
-- **Configuración flexible** mediante archivos properties
-- **Soporte multi-browser** (Chrome, Firefox, Edge)
-- **Integración con CI/CD**
+El proyecto utiliza **Page Object Model** con **Fluent Interface** para crear pruebas mantenibles y escalables. Cada página tiene su propia clase con métodos que permiten encadenar acciones de forma natural.
 
-## 🛠️ Tecnologías utilizadas
+```java
+// Ejemplo de Fluent Interface
+loginPage
+    .enterEmail("user@email.com")
+    .enterPassword("password123")
+    .clickLogin()
+    .verifyLoginSuccess();
+```
 
-| Tecnología | Versión | Propósito |
-|------------|---------|-----------|
-| Java | 21 | Lenguaje de programación |
-| Selenium WebDriver | 4.15.0 | Automatización web |
-| TestNG | 7.8.0 | Framework de testing |
-| ExtentReports | 5.1.1 | Generación de reportes |
-| WebDriverManager | 5.6.2 | Gestión de drivers |
-| Maven | 3.6+ | Gestión de dependencias |
+## Stack Tecnológico
 
-## ¿Qué incluye?
+- **Java 21** - Lenguaje base
+- **Selenium WebDriver 4.15.0** - Automatización del navegador
+- **TestNG 7.8.0** - Framework de pruebas y organización
+- **ExtentReports 5.1.1** - Reportes visuales detallados
+- **WebDriverManager 5.6.2** - Gestión automática de drivers
+- **Maven** - Gestión de dependencias y construcción
 
-- Pruebas de registro de usuario
-- Login y logout
-- Navegación por productos
-- Agregar al carrito y proceso de compra
-- Validaciones básicas de UI
-- 
-## ⚙️ Configuración
+## Funcionalidades Cubiertas
 
-- El navegador por defecto es Chrome. Puedes cambiarlo en `config.properties`.
-- Las URLs, credenciales y parámetros están centralizados en `ConfigReader`.
+- ✅ Registro de nuevos usuarios
+- ✅ Login/Logout de usuarios existentes
+- ✅ Navegación por catálogo de productos
+- ✅ Gestión del carrito de compras
+- ✅ Proceso completo de checkout
+- ✅ Validaciones de UI y funcionalidad
 
-## ▶️ Cómo ejecutar
+## Instalación y Configuración
 
-1. Clona el repositorio  
-2. Asegúrate de tener Java y Maven instalados  
-3. Ejecuta:  
+### Prerrequisitos
+- Java 21 o superior
+- Maven 3.6+
+- Git
+
+### Configuración inicial
+
+1. **Clonar el repositorio**
    ```bash
-   mvn clean test
+   git clone https://github.com/tu-usuario/automation-exercise-framework.git
+   cd automation-exercise-framework
+   ```
 
+2. **Instalar dependencias**
+   ```bash
+   mvn clean install
+   ```
 
- 📌 Notas adicionales
-- El framework usa Fluent Interface para encadenar acciones y mejorar la legibilidad.
-- Cada Page Object incluye validaciones como verifyPageLoaded() para asegurar estabilidad.
-- Los pasos se registran visualmente con BaseTest.createStep() para trazabilidad.
+3. **Configurar navegador** (opcional)
+   
+   Edita `src/main/resources/config.properties`:
+   ```properties
+   browser=chrome  # Opciones: chrome, firefox, edge
+   base.url=https://automationexercise.com
+   implicit.wait=10
+   ```
 
+## Ejecución
 
-👨‍💻 Autor
-Este proyecto fue creado por Héctor como parte de un enfoque técnico para automatización modular, trazable y escalable.
-Se aceptan sugerencias, mejoras y pull requests.
+### Ejecutar todas las pruebas
+```bash
+mvn clean test
+```
 
+### Ejecutar pruebas específicas
+```bash
+# Por clase
+mvn test -Dtest=LoginTest
 
-# AutomationExercise E2E Framework
+# Por método
+mvn test -Dtest=LoginTest#testValidLogin
 
-[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
-[![Selenium](https://img.shields.io/badge/Selenium-4.15.0-green.svg)](https://selenium.dev/)
-[![TestNG](https://img.shields.io/badge/TestNG-7.8.0-red.svg)](https://testng.org/)
-[![Maven](https://img.shields.io/badge/Maven-3.6+-blue.svg)](https://maven.apache.org/)
+# Por grupos de TestNG
+mvn test -Dgroups=smoke
+```
 
-Este repositorio contiene las pruebas automatizadas para el sitio [AutomationExercise.com](https://automationexercise.com). El objetivo es validar los flujos principales del sitio usando Selenium WebDriver con Java y TestNG, aplicando una arquitectura modular basada en Page Object Model con Fluent Interface.
+### Parámetros de ejecución
+```bash
+# Cambiar navegador
+mvn test -Dbrowser=firefox
 
-## 🎯 Características principales
+# Ejecución en modo headless
+mvn test -Dheadless=true
+```
 
-- Page Object Model (POM) con Fluent Interface
-- Manejo robusto de errores con try-catch y validaciones
-- Reporting visual paso a paso con ExtentReports
-- WebDriverManager para gestión automática de drivers
-- Helpers reutilizables para operaciones comunes
-- Configuración flexible mediante archivos `.properties`
-- Soporte multi-browser (Chrome, Firefox, Edge)
-- Integración con CI/CD
+## Estructura del Proyecto
 
-## 🛠️ Tecnologías utilizadas
+```
+src/
+├── main/java/
+│   ├── pages/          # Page Objects
+│   ├── utils/          # Helpers y utilidades
+│   └── config/         # Configuraciones
+├── test/java/
+│   ├── tests/          # Casos de prueba
+│   └── base/           # Clases base para pruebas
+└── resources/
+    ├── config.properties
+    └── testng.xml
+```
 
-| Tecnología         | Versión  | Propósito                     |
-|--------------------|----------|-------------------------------|
-| Java               | 21       | Lenguaje de programación      |
-| Selenium WebDriver | 4.15.0   | Automatización web            |
-| TestNG             | 7.8.0    | Framework de testing          |
-| ExtentReports      | 5.1.1    | Generación de reportes        |
-| WebDriverManager   | 5.6.2    | Gestión de drivers            |
-| Maven              | 3.6+     | Gestión de dependencias       |
-| SLF4J + Logback    | 2.0.9 / 1.4.8 | Logging estructurado     |
-| Commons IO         | 2.11.0   | Manejo de archivos            |
+## Características Destacadas
 
-## 📁 ¿Qué incluye?
+### Manejo Robusto de Errores
+Cada acción incluye validaciones y manejo de excepciones para garantizar estabilidad.
 
-- Pruebas de registro de usuario
-- Login y logout
-- Navegación por productos y categorías
-- Agregar productos al carrito
-- Checkout completo con datos dinámicos
-- Validaciones visuales y funcionales
+### Reporting Detallado
+Los reportes incluyen screenshots automáticos en caso de fallo y logging paso a paso.
 
-## ⚙️ Configuración
+### Configuración Flexible
+Parámetros centralizados en archivos `.properties` para fácil mantenimiento.
 
-- El navegador por defecto es Chrome. Puedes cambiarlo en `src/main/resources/config.properties`:
+### Integración CI/CD Ready
+Compatible con Jenkins, GitHub Actions y otros sistemas de integración continua.
 
-```properties
-browser=chrome
-Valores soportados: chrome, firefox, edge
+## Reportes
 
+Los reportes se generan automáticamente en:
+- `target/extent-reports/` - Reportes HTML detallados
+- `target/screenshots/` - Screenshots de fallos
 
+## Contribución
+
+Las contribuciones son bienvenidas. Para contribuir:
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
+3. Commit tus cambios (`git commit -m 'Agregar nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Abre un Pull Request
+
+## Contacto
+
+**Héctor** - Automation Engineer
+
+¿Tienes preguntas o sugerencias? No dudes en abrir un issue o contactarme directamente.
