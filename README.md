@@ -36,5 +36,27 @@ Este repositorio contiene las pruebas automatizadas para el sitio [AutomationExe
 - Navegación por productos
 - Agregar al carrito y proceso de compra
 - Validaciones básicas de UI
+- 
+## ⚙️ Configuración
 
+- El navegador por defecto es Chrome. Puedes cambiarlo en `config.properties`.
+- Las URLs, credenciales y parámetros están centralizados en `ConfigReader`.
+
+## ▶️ Cómo ejecutar
+
+1. Clona el repositorio
+2. Asegúrate de tener Java y Maven instalados
+3. Ejecuta:  
+   ```bash
+   mvn clean test
+
+ 📌 Notas adicionales
+- El framework usa Fluent Interface para encadenar acciones y mejorar la legibilidad.
+- Cada Page Object incluye validaciones como verifyPageLoaded() para asegurar estabilidad.
+- Los pasos se registran visualmente con BaseTest.createStep() para trazabilidad.
+
+
+👨‍💻 Autor
+Este proyecto fue creado por Héctor como parte de un enfoque técnico para automatización modular, trazable y escalable.
+Se aceptan sugerencias, mejoras y pull requests.
 
