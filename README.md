@@ -13,11 +13,10 @@ El proyecto utiliza **Page Object Model** con **Fluent Interface** para crear pr
 
 ```java
 // Ejemplo de Fluent Interface
-loginPage
-    .enterEmail("user@email.com")
-    .enterPassword("password123")
-    .clickLogin()
-    .verifyLoginSuccess();
+HomePage(getDriver())
+                .navigateToHome()
+                .verifyHomePageLoaded()
+                .clickSignupLogin()
 ```
 
 ## Stack Tecnológico
