@@ -14,7 +14,6 @@ public class SignupLoginPage extends BasePage {
     private final By signupNameField = By.xpath("//input[@placeholder='Name']");
     private final By signupEmailField = By.xpath("//input[@data-qa='signup-email']");
     private final By signupButton = By.xpath("//button[@data-qa='signup-button']");
-
     private final By loginEmailField = By.xpath("//input[@data-qa='login-email']");
     private final By loginPasswordField = By.xpath("//input[@data-qa='login-password']");
     private final By loginButton = By.xpath("//button[@data-qa='login-button']");
@@ -24,37 +23,25 @@ public class SignupLoginPage extends BasePage {
     public SignupLoginPage(WebDriver driver) {
         super(driver);
         this.helpers = new WebHelpers(driver);
+
     }
 
     public SignupLoginPage fillSignupName(String name) {
-        try {
-            helpers.fillTextField(signupNameField, name);
-            BaseTest.createStep("Ingresando nombre: " + name, true, true, IMMEDIATE);
-        } catch (Exception e) {
-            helpers.handleFieldError("nombre", e);
-        }
+        helpers.fillTextField(signupNameField, name, "Name");
+        BaseTest.createStep("Ingresando nombre: " + name, true, true, IMMEDIATE);
         return this;
     }
 
     public SignupLoginPage fillSignupEmail(String email) {
-        try {
-            helpers.fillTextField(signupEmailField, email);
-            BaseTest.createStep("Ingresando email: " + email, true, true, IMMEDIATE);
-        } catch (Exception e) {
-            helpers.handleFieldError("email", e);
-        }
+        helpers.fillTextField(signupEmailField, email, "Email");
+        BaseTest.createStep("Ingresando email: " + email, true, true, IMMEDIATE);
         return this;
     }
 
     public CreateAccountPage clickSignupButton() {
-        try {
-            helpers.clickElement(signupButton);
-            BaseTest.createStep("Haciendo clic en Signup", true, true, IMMEDIATE);
-            return new CreateAccountPage(driver);
-        } catch (Exception e) {
-            helpers.handleClickError("botón Signup", e);
-            return new CreateAccountPage(driver);
-        }
+        helpers.clickElement(signupButton, "botón Signup");
+        BaseTest.createStep("Haciendo clic en Signup", true, true, IMMEDIATE);
+        return new CreateAccountPage(driver);
     }
 
 

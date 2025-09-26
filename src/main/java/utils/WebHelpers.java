@@ -35,9 +35,23 @@ public class WebHelpers {
     // ==================== INTERACCIÓN BÁSICA CON ELEMENTOS ====================
 
     /**
-     * Llena un campo de texto con el valor especificado
+     * Llena un campo de texto con manejo de errores y logging automático
      * @param locator Localizador del elemento
      * @param value Valor a ingresar
+     * @param fieldDescription Descripción del campo para logs y manejo de errores
+     */
+    public void fillTextField(By locator, String value, String fieldDescription) {
+        try {
+            WebElement field = wait.until(ExpectedConditions.elementToBeClickable(locator));
+            field.clear();
+            field.sendKeys(value);
+        } catch (Exception e) {
+            handleFieldError(fieldDescription, e);
+        }
+    }
+
+    /**
+     * Llena un campo de texto
      */
     public void fillTextField(By locator, String value) {
         WebElement field = wait.until(ExpectedConditions.elementToBeClickable(locator));
@@ -63,6 +77,20 @@ public class WebHelpers {
     public void clickElement(By locator) {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
         element.click();
+    }
+
+    /**
+     * Hace clic en un elemento de forma segura con manejo de errores y logging automático
+     * @param locator Localizador del elemento
+     * @param elementDescription Descripción del elemento para logs y manejo de errores
+     */
+    public void clickElement(By locator, String elementDescription) {
+        try {
+            WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+            element.click();
+        } catch (Exception e) {
+            handleClickError(elementDescription, e);
+        }
     }
 
     /**
@@ -175,20 +203,70 @@ public class WebHelpers {
         }
     }
 
+    /**
+     * Convierte número de mes a nombre de mes
+     * @param monthNumber Número del mes (1-12 o 01-12)
+     * @return Nombre del mes en inglés
+     */
+    private String convertMonthNumberToName(String monthNumber) {
+        int month = Integer.parseInt(monthNumber);
+        String[] months = {"January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"};
+
+        if (month >= 1 && month <= 12) {
+            return months[month - 1];
+        }
+        throw new IllegalArgumentException("Número de mes inválido: " + monthNumber);
+    }
+
+    /**
+     * Completa los campos de fecha de nacimiento con conversión automática de mes
+     * @param dayLocator Localizador del dropdown del día
+     * @param monthLocator Localizador del dropdown del mes
+     * @param yearLocator Localizador del dropdown del año
+     * @param day Día (ej: "17")
+     * @param month Mes como número (ej: "11") o nombre (ej: "November")
+     * @param year Año (ej: "2010")
+     * @param fieldDescription Descripción para logs
+     */
+    public void fillDateOfBirth(By dayLocator, By monthLocator, By yearLocator, String day, String month, String year, String fieldDescription) {
+        try {
+            // Convertir mes si es número
+            String monthToUse = month;
+            if (month.matches("\\d{1,2}")) { // Si es número
+                monthToUse = convertMonthNumberToName(month);
+            }
+
+            selectDropdownByText(dayLocator, day);
+            selectDropdownByText(monthLocator, monthToUse);
+            selectDropdownByText(yearLocator, year);
+        } catch (Exception e) {
+            handleFieldError(fieldDescription, e);
+        }
+    }
+
     // ==================== NAVEGACIÓN Y SCROLL ====================
 
     /**
-     * Hace scroll hacia abajo en la página
+     * Hace scroll hacia abajo en la página usando PAGE_DOWN
      */
     public void scrollDown() {
         actions.sendKeys(Keys.PAGE_DOWN).perform();
     }
 
     /**
-     * Hace scroll hacia arriba en la página
+     * Hace scroll hacia arriba en la página usando PAGE_UP
      */
     public void scrollUp() {
         actions.sendKeys(Keys.PAGE_UP).perform();
+    }
+
+    /**
+     * Hace scroll suave hacia abajo con JavaScript
+     * @param pixels Cantidad de píxeles a hacer scroll
+     */
+    public void smoothScrollDown(int pixels) {
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo({top: window.scrollY + " + pixels + ", behavior: 'smooth'});");
     }
 
     /**
@@ -196,16 +274,65 @@ public class WebHelpers {
      * @param locator Localizador del elemento
      */
     public void scrollToElement(By locator) {
+        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element);
+    }
+
+    /**
+     * Hace scroll hacia un elemento específico sin esperar
+     * @param locator Localizador del elemento
+     */
+    public void scrollToElementImmediate(By locator) {
         WebElement element = driver.findElement(locator);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     /**
-     * Hace scroll usando JavaScript
+     * Hace scroll usando JavaScript con control total
      * @param pixels Cantidad de píxeles a hacer scroll (positivo = abajo, negativo = arriba)
      */
     public void scrollByPixels(int pixels) {
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, " + pixels + ");");
+    }
+
+    /**
+     * Hace scroll al final de la página
+     */
+    public void scrollToBottom() {
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight);");
+    }
+
+    /**
+     * Hace scroll al inicio de la página
+     */
+    public void scrollToTop() {
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
+    }
+
+    /**
+     * Hace scroll dentro de un elemento específico (útil para divs con scroll)
+     * @param containerLocator Localizador del contenedor con scroll
+     * @param pixels Píxeles a hacer scroll dentro del contenedor
+     */
+    public void scrollInsideElement(By containerLocator, int pixels) {
+        WebElement container = driver.findElement(containerLocator);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop += " + pixels + ";", container);
+    }
+
+    /**
+     * Verifica si un elemento está visible en el viewport
+     * @param locator Localizador del elemento
+     * @return true si está visible, false si no
+     */
+    public boolean isElementInViewport(By locator) {
+        WebElement element = driver.findElement(locator);
+        return (Boolean) ((JavascriptExecutor) driver).executeScript(
+                "var rect = arguments[0].getBoundingClientRect();" +
+                        "return (rect.top >= 0 && rect.left >= 0 && " +
+                        "rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && " +
+                        "rect.right <= (window.innerWidth || document.documentElement.clientWidth));",
+                element
+        );
     }
 
     // ==================== ESPERAS Y SINCRONIZACIÓN ====================
@@ -433,6 +560,7 @@ public class WebHelpers {
     public void waitForPageToLoad(By pageIdentifierLocator, int timeoutSeconds) {
         waitForElementToAppear(pageIdentifierLocator, timeoutSeconds);
     }
+
 
     public void waitForPageToLoad(By pageIdentifierLocator) {
         waitForPageToLoad(pageIdentifierLocator, 10);
