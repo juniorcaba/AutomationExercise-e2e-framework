@@ -51,15 +51,15 @@ public class HomePage extends BasePage {
     }
 
     public SignupLoginPage clickSignupLogin() {
-        helpers.clickElement(signupLoginButton);
+        helpers.clickElement(signupLoginButton, "botón Signup/Login");
         BaseTest.createStep("Accediendo a la sección de Signup / Login", true, true, IMMEDIATE);
         helpers.waitForPageToLoad(labelLoginAccount);
-        return new SignupLoginPage(driver); // CAMBIO CLAVE
+        return new SignupLoginPage(driver);
     }
 
-//    public boolean isProductVisible(String productName) {
-//        By productLocator = By.xpath("//div[contains(@class,'productinfo')]//p[text()='" + productName + "']");
-//        return helpers.isElementVisible(productLocator, 5);
-//    }
+    public boolean isProductVisible(String productName) {
+        By productLocator = By.xpath("//div[contains(@class,'productinfo')]//p[text()='" + productName + "']");
+        return helpers.isElementVisible(productLocator, 5);
+    }
 
 }
