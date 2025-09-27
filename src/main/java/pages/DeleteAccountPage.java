@@ -27,7 +27,7 @@ public class DeleteAccountPage extends BasePage {
      */
     public DeleteAccountPage verifyAccountDeletePageIsDisplayed() {
         helpers.waitForPageToLoad(accountDeleteTitle, 10);
-        BaseTest.createStep("Verificando que el titulo 'Account Created' está presente", true, true, IMMEDIATE);
+        BaseTest.createStep("Verificando que el titulo 'Account Deleted!' está presente", true, true, IMMEDIATE);
         return this;
     }
 

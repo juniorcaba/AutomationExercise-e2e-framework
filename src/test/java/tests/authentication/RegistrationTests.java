@@ -12,10 +12,11 @@ public class RegistrationTests extends BaseTest {
                 .navigateToHome()
                 .verifyHomePageLoaded()
                 .clickSignupLogin()
+                .verifylNewUserSignupIsVisible()
                 .fillSignupName("Mateo")
                 .fillSignupEmail("emaildeprueba@test.com")
                 .clickSignupButton()
-                .verifyCreateAccountInfoIsVisible()
+                .signupAndVerifySuccess()
                 .selectTitle("Mr.")
                 .fillPassword("123456")
                 .fillDateOfBirth("17","11", "2010")
@@ -32,13 +33,46 @@ public class RegistrationTests extends BaseTest {
                 .fillZipCode("12000")
                 .fillMobilePhone("829-400-0909")
                 .clickCreateAccountButton()
-                .verifyAccountCreationSuccess()
+                .verifyAccountCreatedPageIsDisplayed()
                 .clickContinueAfterAccountCreation()
                 .verifyUserIsLoggedIn()
                 .clickDeleteAccount()
-                .verifyDeleteAccountSuccess()
+                .verifySuccessMessage()
                 .clickContinueAfterAccountDeletion()
-                .verifyUserLoggedOutState();
+                .verifyUserIsNotLoggedIn();
+
+    }
+
+    //@Test(description = "Create Account for test")
+    public void testCreateUserForTest(){
+        new HomePage(getDriver())
+                .navigateToHome()
+                .verifyHomePageLoaded()
+                .clickSignupLogin()
+                .verifylNewUserSignupIsVisible()
+                .fillSignupName("Sandra")
+                .fillSignupEmail("emailparaprueba@test.com")
+                .clickSignupButton()
+                .signupAndVerifySuccess()
+                .selectTitle("Mr.")
+                .fillPassword("123456")
+                .fillDateOfBirth("17","11", "2010")
+                .selectNewsletterSubscription()
+                .selectSpecialOffers()
+                .fillFirstName("Mateo")
+                .fillLastName("Castillo")
+                .fillCompany("SQA")
+                .fillAddress1("Santo cura 31")
+                .fillAddress2("Santo Domingo, Republica Dominicana")
+                .fillCountry("Canada")
+                .fillState("QA")
+                .fillCity("Santo Domingo")
+                .fillZipCode("12000")
+                .fillMobilePhone("829-400-0909")
+                .clickCreateAccountButton()
+                .verifyAccountCreatedPageIsDisplayed()
+                .clickContinueAfterAccountCreation()
+                .verifyUserIsLoggedIn();
 
     }
 
