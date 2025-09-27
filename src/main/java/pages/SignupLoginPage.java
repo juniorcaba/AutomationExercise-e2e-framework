@@ -99,8 +99,6 @@
             helpers.validateActionResult(loginErrorMessage, 2, "Login");
 
             BaseTest.createStep("Login exitoso", true, true, IMMEDIATE);
-
-            // Crear HomePage sin verificación adicional para ser más rápido
             return new HomePage(driver);
         }
 
