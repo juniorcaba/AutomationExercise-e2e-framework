@@ -25,7 +25,21 @@ public class RegistrationTests extends BaseTest {
                 .fillLastName("Castillo")
                 .fillCompany("SQA")
                 .fillAddress1("Santo cura 31")
-                .fillAddress2("Santo Domingo, Republica Dominicana");
+                .fillAddress2("Santo Domingo, Republica Dominicana")
+                .fillCountry("Canada")
+                .fillState("QA")
+                .fillCity("Santo Domingo")
+                .fillZipCode("12000")
+                .fillMobilePhone("829-400-0909")
+                .clickCreateAccountButton()
+                .verifyAccountCreationSuccess()
+                .clickContinueAfterAccountCreation()
+                .verifyUserIsLoggedIn()
+                .clickDeleteAccount()
+                .verifyDeleteAccountSuccess()
+                .clickContinueAfterAccountDeletion()
+                .verifyUserLoggedOutState();
+
     }
 
 

@@ -10,6 +10,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
+import java.text.Normalizer;
+import java.util.regex.Pattern;
+
 import static basetest.BaseTest.StepMode.*;
 import static basetest.BaseTest.BufferAction.*;
 
@@ -161,10 +164,62 @@ public class WebHelpers {
      * @param locator Localizador del select
      * @param visibleText Texto visible de la opción
      */
-    public void selectDropdownByText(By locator, String visibleText) {
+    public void selectDropdown(By locator, String visibleText) {
         WebElement selectElement = wait.until(ExpectedConditions.elementToBeClickable(locator));
         Select select = new Select(selectElement);
         select.selectByVisibleText(visibleText);
+    }
+
+    /**
+     * Selecciona una opción en un select HTML estándar por texto visible
+     * @param locator Localizador del select
+     * @param visibleText Texto visible de la opción
+     */
+    public void selectDropdownByText(By locator, String visibleText) {
+        try {
+            WebElement selectElement = wait.until(ExpectedConditions.elementToBeClickable(locator));
+            Select select = new Select(selectElement);
+            List<WebElement> options = select.getOptions();
+
+            String normalizedSearchText = normalizeText(visibleText);
+
+            // Estrategia 1: Coincidencia exacta (comportamiento original)
+            for (WebElement option : options) {
+                if (option.getText().trim().equalsIgnoreCase(visibleText)) {
+                    select.selectByVisibleText(option.getText().trim());
+                    return;
+                }
+            }
+
+            // Estrategia 2: Coincidencia sin acentos
+            for (WebElement option : options) {
+                String optionText = option.getText().trim();
+                if (normalizeText(optionText).equals(normalizedSearchText)) {
+                    select.selectByVisibleText(optionText);
+                    return;
+                }
+            }
+
+            // Si no encuentra nada, lanzar error con opciones disponibles
+            StringBuilder availableOptions = new StringBuilder();
+            for (int i = 0; i < Math.min(options.size(), 5); i++) {
+                availableOptions.append("'").append(options.get(i).getText().trim()).append("'");
+                if (i < Math.min(options.size(), 5) - 1) availableOptions.append(", ");
+            }
+
+            throw new RuntimeException("No se encontró '" + visibleText + "' en el dropdown. " +
+                    "Opciones disponibles: " + availableOptions.toString());
+
+        } catch (Exception e) {
+            handleFieldError("dropdown", e);
+        }
+    }
+
+    private String normalizeText(String text) {
+        if (text == null) return "";
+        String normalized = Normalizer.normalize(text.toLowerCase().trim(), Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(normalized).replaceAll("");
     }
 
     /**
@@ -420,27 +475,31 @@ public class WebHelpers {
      * @return true si el elemento apareció y desapareció, false si no
      */
     public boolean waitForElementToAppearAndThenDisappear(By locator, int timeoutSeconds) {
-        boolean appeared = false;
-        int attempts = timeoutSeconds * 2;
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
 
-        for (int i = 0; i < attempts; i++) {
-            try {
-                List<WebElement> elements = driver.findElements(locator);
+        try {
+            // Custom condition que espera aparición y luego desaparición
+            return wait.until(webDriver -> {
+                List<WebElement> elements = webDriver.findElements(locator);
 
-                if (!elements.isEmpty() && elements.get(0).isDisplayed()) {
-                    appeared = true;
+                // Si no hay elementos o no están visibles, aún esperando que aparezca
+                if (elements.isEmpty() || !elements.get(0).isDisplayed()) {
+                    return false;
                 }
 
-                if (appeared && (elements.isEmpty() || !elements.get(0).isDisplayed())) {
-                    return true;
+                // El elemento apareció, ahora esperar un momento y verificar si desapareció
+                try {
+                    Thread.sleep(100); // Pequeña pausa para detectar desaparición
+                    elements = webDriver.findElements(locator);
+                    return elements.isEmpty() || !elements.get(0).isDisplayed();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return false;
                 }
-
-                Thread.sleep(500);
-            } catch (Exception e) {
-                // Continuar verificando
-            }
+            });
+        } catch (TimeoutException e) {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -483,6 +542,40 @@ public class WebHelpers {
             }
         }
         return false;
+    }
+
+    /**
+     * Verifica que un elemento NO esté presente usando WebDriverWait (mejor práctica)
+     * @param locator Localizador del elemento
+     * @param timeoutSeconds Tiempo máximo de espera
+     * @return true si NO está presente, false si está presente
+     */
+    public boolean verifyElementIsNotPresent(By locator, int timeoutSeconds) {
+        try {
+            WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+            // Usar ExpectedConditions predefinido
+            customWait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Verifica que un elemento NO esté visible usando WebDriverWait (mejor práctica)
+     * @param locator Localizador del elemento
+     * @param timeoutSeconds Tiempo máximo de espera
+     * @return true si NO está visible, false si está visible
+     */
+    public boolean verifyElementIsNotVisible(By locator, int timeoutSeconds) {
+        try {
+            WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+            // Esperar hasta que el elemento sea invisible
+            customWait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+            return true; // No está visible
+        } catch (TimeoutException e) {
+            return false; // Todavía está visible después del timeout
+        }
     }
 
     // ==================== UTILIDADES JAVASCRIPT ====================

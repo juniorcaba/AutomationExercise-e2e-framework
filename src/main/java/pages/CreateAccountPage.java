@@ -1,9 +1,11 @@
 package pages;
 
 import basetest.BaseTest;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import utils.WebHelpers;
+import pages.AccountCreatedPage;
 
 import static basetest.BaseTest.StepMode.*;
 import static basetest.BaseTest.BufferAction.*;
@@ -26,6 +28,12 @@ public class CreateAccountPage extends BasePage {
     private final By companyInput = By.xpath("//input[@id='company']");
     private final By address1Input = By.xpath("//input[@id='address1']");
     private final By address2Input = By.xpath("//input[@id='address2']");
+    private final By countryInput = By.xpath("//select[@id='country']");
+    private final By stateInput = By.xpath("//input[@id='state']");
+    private final By cityInput = By.xpath("//input[@id='city']");
+    private final By zipcodeInput = By.xpath("//input[@id='zipcode']");
+    private final By mobileNumberInput = By.xpath("//input[@id='mobile_number']");
+    private final By createAccountBtn = By.xpath("//*[contains(text(), 'Create Account')]");
 
 
 
@@ -132,6 +140,49 @@ public class CreateAccountPage extends BasePage {
         BaseTest.createStep("Ingresando la direccion 2: " + address2, true, true, IMMEDIATE);
         return this;
     }
+
+    public CreateAccountPage fillCountry(String country){
+        helpers.selectDropdownByText(countryInput, country);
+        BaseTest.createStep("Ingresando el pais: " +country, true, true, IMMEDIATE);
+        return this;
+    }
+
+    public CreateAccountPage fillState(String state){
+        helpers.fillTextField(stateInput, state);
+        BaseTest.createStep("Ingresando el Estado: " +state, true, true, IMMEDIATE);
+        return this;
+    }
+
+    public CreateAccountPage fillCity(String city){
+        helpers.scrollToElement(cityInput);
+        helpers.fillTextField(cityInput, city);
+        BaseTest.createStep("Ingresando la Cuidad: " +city, true, true, IMMEDIATE);
+        return this;
+    }
+
+    public CreateAccountPage fillZipCode(String zipcode){
+        helpers.fillTextField(zipcodeInput, zipcode);
+        BaseTest.createStep("Ingresando el codigo Postal: " +zipcode, true, true, IMMEDIATE);
+        return this;
+    }
+
+    public CreateAccountPage fillMobilePhone(String mobilePhone){
+        helpers.fillTextField(mobileNumberInput, mobilePhone);
+        BaseTest.createStep("Ingresando el Numero de telefono movil: " +mobilePhone, true, true, IMMEDIATE);
+        return this;
+    }
+
+    public AccountCreatedPage clickCreateAccountButton() {
+        helpers.clickElement(createAccountBtn, "botón para crear cuenta");
+        BaseTest.createStep("Haciendo clic en Create Account", true, true, IMMEDIATE);
+        return new AccountCreatedPage(driver);
+    }
+
+    public CreateAccountPage test(){
+        helpers.isElementVisible(createAccountBtn, 10);
+        return this;
+    }
+
 
 
 
