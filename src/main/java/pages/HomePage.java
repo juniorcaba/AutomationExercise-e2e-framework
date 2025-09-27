@@ -131,7 +131,7 @@ public class HomePage extends BasePage {
      * @return the home page
      */
     public HomePage verifyUserIsLoggedIn() {
-        helpers.waitForElementToAppear(loggedInMessage, 5);
+        helpers.waitForElementToAppear(loggedInMessage, 3);
         BaseTest.createStep("Verificando que el usuario está logueado", true, true, IMMEDIATE);
         return this;
     }

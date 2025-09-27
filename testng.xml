@@ -11,6 +11,7 @@
 
         <classes>
             <class name="tests.authentication.RegistrationTests"/>
+<!--            <class name="tests.authentication.LoginLogoutTests"/>-->
         </classes>
     </test>
 

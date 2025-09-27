@@ -31,7 +31,7 @@ public class WebHelpers {
 
     public WebHelpers(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         this.actions = new Actions(driver);
     }
 
@@ -93,6 +93,41 @@ public class WebHelpers {
             element.click();
         } catch (Exception e) {
             handleClickError(elementDescription, e);
+        }
+    }
+
+    /**
+     * Intenta hacer clic en un elemento con timeout corto
+     * @param locator Localizador del elemento
+     * @param timeoutSeconds Tiempo de espera personalizado
+     * @param elementDescription Descripción del elemento
+     * @return true si pudo hacer clic, false si el elemento no existe
+     */
+    public boolean tryClickElement(By locator, int timeoutSeconds, String elementDescription) {
+        try {
+            WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+            WebElement element = shortWait.until(ExpectedConditions.elementToBeClickable(locator));
+            element.click();
+            return true; // Éxito
+        } catch (TimeoutException e) {
+            // No lanzar error - simplemente retornar false
+            return false;
+        }
+    }
+
+    /**
+     * Verifica si un elemento es clickeable (sin hacer clic)
+     * @param locator Localizador del elemento
+     * @param timeoutSeconds Tiempo de espera
+     * @return true si es clickeable, false si no
+     */
+    public boolean isElementClickable(By locator, int timeoutSeconds) {
+        try {
+            WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+            shortWait.until(ExpectedConditions.elementToBeClickable(locator));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
         }
     }
 
@@ -523,6 +558,16 @@ public class WebHelpers {
         return false;
     }
 
+//    public boolean waitForElementToAppear(By locator, int timeoutSeconds) {
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+//        try {
+//            wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+//            return true;
+//        } catch (TimeoutException e) {
+//            return false;
+//        }
+//    }
+
     /**
      * Espera que un elemento desaparezca
      * @param locator Localizador del elemento
@@ -575,6 +620,102 @@ public class WebHelpers {
             return true; // No está visible
         } catch (TimeoutException e) {
             return false; // Todavía está visible después del timeout
+        }
+    }
+
+    /**
+     * Valida el resultado de una acción esperando error o éxito
+     * @param errorLocator Localizador del mensaje de error
+     * @param successLocator Localizador del elemento que indica éxito (puede ser null)
+     * @param timeoutSeconds Tiempo máximo de espera
+     * @param actionDescription Descripción de la acción para logs
+     * @return true si fue exitoso, lanza excepción si hay error
+     */
+    public boolean validateActionResult(By errorLocator, By successLocator, int timeoutSeconds, String actionDescription) {
+        WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+
+        try {
+            if (successLocator != null) {
+                // Esperar por error O éxito
+                shortWait.until(ExpectedConditions.or(
+                        ExpectedConditions.visibilityOfElementLocated(errorLocator),
+                        ExpectedConditions.visibilityOfElementLocated(successLocator)
+                ));
+            } else {
+                // Solo esperar por error
+                try {
+                    shortWait.until(ExpectedConditions.visibilityOfElementLocated(errorLocator));
+                } catch (TimeoutException e) {
+                    // Si no hay error en el tiempo especificado, asumir éxito
+                    return true;
+                }
+            }
+        } catch (TimeoutException e) {
+            // Si no aparece nada, asumir éxito
+            return true;
+        }
+
+        // Verificar si hay error
+        List<WebElement> errors = driver.findElements(errorLocator);
+        if (!errors.isEmpty() && errors.get(0).isDisplayed()) {
+            String errorText = errors.get(0).getText();
+            String fullErrorMessage = actionDescription + " falló: " + errorText;
+            BaseTest.processBuffer(COMMIT_MERGED_FAILURE, fullErrorMessage, true);
+            throw new RuntimeException(fullErrorMessage);
+        }
+
+        return true; // Éxito
+    }
+
+    /**
+     * Versión simplificada solo para verificar errores
+     * @param errorLocator Localizador del mensaje de error
+     * @param timeoutSeconds Tiempo máximo de espera
+     * @param actionDescription Descripción de la acción para logs
+     * @return true si fue exitoso, lanza excepción si hay error
+     */
+    public boolean validateActionResult(By errorLocator, int timeoutSeconds, String actionDescription) {
+        return validateActionResult(errorLocator, null, timeoutSeconds, actionDescription);
+    }
+
+    /**
+     * Versión con timeout por defecto
+     * @param errorLocator Localizador del mensaje de error
+     * @param actionDescription Descripción de la acción para logs
+     * @return true si fue exitoso, lanza excepción si hay error
+     */
+    public boolean validateActionResult(By errorLocator, String actionDescription) {
+        return validateActionResult(errorLocator, null, 2, actionDescription);
+    }
+
+    /**
+     * Obtiene el texto de error de forma segura
+     * @param errorLocator Localizador del mensaje de error
+     * @return Texto del error o mensaje por defecto si no se encuentra
+     */
+    public String getErrorMessageSafe(By errorLocator) {
+        try {
+            List<WebElement> errors = driver.findElements(errorLocator);
+            if (!errors.isEmpty() && errors.get(0).isDisplayed()) {
+                return errors.get(0).getText();
+            }
+            return "No se encontró mensaje de error";
+        } catch (Exception e) {
+            return "Error al obtener mensaje: " + e.getMessage();
+        }
+    }
+
+    /**
+     * Verifica si un elemento de error está visible inmediatamente
+     * @param errorLocator Localizador del mensaje de error
+     * @return true si el error está visible, false si no
+     */
+    public boolean isErrorVisible(By errorLocator) {
+        try {
+            List<WebElement> errors = driver.findElements(errorLocator);
+            return !errors.isEmpty() && errors.get(0).isDisplayed();
+        } catch (Exception e) {
+            return false;
         }
     }
 

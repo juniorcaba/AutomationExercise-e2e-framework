@@ -27,7 +27,7 @@ public class AccountCreatedPage extends BasePage {
      * Verifica que la página de confirmación de cuenta creada esté cargada
      */
     public AccountCreatedPage verifyAccountCreatedPageIsDisplayed() {
-        helpers.waitForPageToLoad(accountCreatedTitle, 10);
+        helpers.waitForPageToLoad(accountCreatedTitle, 5);
         BaseTest.createStep("Verificando que el titulo 'Account Created' está presente", true, true, IMMEDIATE);
         return this;
     }
