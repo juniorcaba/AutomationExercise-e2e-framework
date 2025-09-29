@@ -1,14 +1,14 @@
-package pages;
+package pages.authentication;
 
 import basetest.BaseTest;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import pages.BasePage;
 import utils.WebHelpers;
-import pages.AccountCreatedPage;
 
 import static basetest.BaseTest.StepMode.*;
 import static basetest.BaseTest.BufferAction.*;
+
 
 public class CreateAccountPage extends BasePage {
 
@@ -39,12 +39,22 @@ public class CreateAccountPage extends BasePage {
 
     private final WebHelpers helpers;
 
+    /**
+     * Instantiates a new Create account page.
+     *
+     * @param driver the driver
+     */
     public CreateAccountPage(WebDriver driver) {
         super(driver);
         this.helpers = new WebHelpers(driver);
     }
 
 
+    /**
+     * Select mr title create account page.
+     *
+     * @return the create account page
+     */
     public CreateAccountPage selectMrTitle() {
         helpers.clickElement(mrSelectButton);
         BaseTest.createStep("Seleccionando título: Mr.", true, true, IMMEDIATE);
@@ -52,6 +62,11 @@ public class CreateAccountPage extends BasePage {
     }
 
 
+    /**
+     * Select mrs title create account page.
+     *
+     * @return the create account page
+     */
     public CreateAccountPage selectMrsTitle() {
         helpers.clickElement(mrsSelectButton);
         BaseTest.createStep("Seleccionando título: Mrs.", true, true, IMMEDIATE);
@@ -60,6 +75,7 @@ public class CreateAccountPage extends BasePage {
 
     /**
      * Selecciona el título basado en parámetro
+     *
      * @param title El título a seleccionar ("Mr." o "Mrs.")
      * @return La misma instancia de la página para encadenamiento
      */
@@ -77,6 +93,12 @@ public class CreateAccountPage extends BasePage {
         return this;
     }
 
+    /**
+     * Fill password create account page.
+     *
+     * @param password the password
+     * @return the create account page
+     */
     public CreateAccountPage fillPassword(String password) {
         helpers.fillTextField(passwordField, password, "password");
         BaseTest.createStep("Ingresando Password: " + password, true, true, IMMEDIATE);
@@ -84,6 +106,11 @@ public class CreateAccountPage extends BasePage {
     }
 
 
+    /**
+     * Select newsletter subscription create account page.
+     *
+     * @return the create account page
+     */
     public CreateAccountPage selectNewsletterSubscription(){
         helpers.clickElement(newsletterCheckbox, "Checkbox newsletter");
         BaseTest.createStep("Seleccionando suscripción al newsletter", true, true, IMMEDIATE);
@@ -91,24 +118,48 @@ public class CreateAccountPage extends BasePage {
     }
 
 
+    /**
+     * Select special offers create account page.
+     *
+     * @return the create account page
+     */
     public CreateAccountPage selectSpecialOffers() {
         helpers.clickElement(specialOffersCheckbox, "checkbox ofertas especiales");
         BaseTest.createStep("Seleccionando ofertas especiales", true, true, IMMEDIATE);
         return this;
     }
 
+    /**
+     * Verify create account info is visible create account page.
+     *
+     * @return the create account page
+     */
     public CreateAccountPage verifyCreateAccountInfoIsVisible() {
         helpers.waitForPageToLoad(enterAccountInfo);
         BaseTest.createStep("Verificando que la página Create Account está cargada", true, true, IMMEDIATE);
         return this;
     }
 
+    /**
+     * Fill date of birth create account page.
+     *
+     * @param day   the day
+     * @param month the month
+     * @param year  the year
+     * @return the create account page
+     */
     public CreateAccountPage fillDateOfBirth(String day, String month, String year) {
         helpers.fillDateOfBirth(dayDropdown, monthDropdown, yearDropdown, day, month, year, "fecha de nacimiento");
         BaseTest.createStep("Configurando fecha de nacimiento: " + day + "/" + month + "/" + year, true, true, IMMEDIATE);
         return this;
     }
 
+    /**
+     * Fill first name create account page.
+     *
+     * @param firstName the first name
+     * @return the create account page
+     */
     public CreateAccountPage fillFirstName(String firstName) {
         //helpers.scrollToElement(addressSection);
         helpers.fillTextField(firstNameInput, firstName, "firstName");
@@ -116,12 +167,24 @@ public class CreateAccountPage extends BasePage {
         return this;
     }
 
+    /**
+     * Fill last name create account page.
+     *
+     * @param lastName the last name
+     * @return the create account page
+     */
     public CreateAccountPage fillLastName(String lastName) {
         helpers.fillTextField(lastNameInput, lastName, "firstName");
         BaseTest.createStep("Ingresando el apellido: " + lastName, true, true, IMMEDIATE);
         return this;
     }
 
+    /**
+     * Fill company create account page.
+     *
+     * @param company the company
+     * @return the create account page
+     */
     public CreateAccountPage fillCompany(String company) {
         helpers.scrollToElement(companyInput);
         helpers.fillTextField(companyInput, company, "company");
@@ -129,30 +192,60 @@ public class CreateAccountPage extends BasePage {
         return this;
     }
 
+    /**
+     * Fill address 1 create account page.
+     *
+     * @param address1 the address 1
+     * @return the create account page
+     */
     public CreateAccountPage fillAddress1(String address1) {
         helpers.fillTextField(address1Input, address1, "firstName");
         BaseTest.createStep("Ingresando la direccion 1: " + address1, true, true, IMMEDIATE);
         return this;
     }
 
+    /**
+     * Fill address 2 create account page.
+     *
+     * @param address2 the address 2
+     * @return the create account page
+     */
     public CreateAccountPage fillAddress2(String address2) {
         helpers.fillTextField(address2Input, address2, "firstName");
         BaseTest.createStep("Ingresando la direccion 2: " + address2, true, true, IMMEDIATE);
         return this;
     }
 
+    /**
+     * Fill country create account page.
+     *
+     * @param country the country
+     * @return the create account page
+     */
     public CreateAccountPage fillCountry(String country){
         helpers.selectDropdownByText(countryInput, country);
         BaseTest.createStep("Ingresando el pais: " +country, true, true, IMMEDIATE);
         return this;
     }
 
+    /**
+     * Fill state create account page.
+     *
+     * @param state the state
+     * @return the create account page
+     */
     public CreateAccountPage fillState(String state){
         helpers.fillTextField(stateInput, state);
         BaseTest.createStep("Ingresando el Estado: " +state, true, true, IMMEDIATE);
         return this;
     }
 
+    /**
+     * Fill city create account page.
+     *
+     * @param city the city
+     * @return the create account page
+     */
     public CreateAccountPage fillCity(String city){
         helpers.scrollToElement(cityInput);
         helpers.fillTextField(cityInput, city);
@@ -160,24 +253,46 @@ public class CreateAccountPage extends BasePage {
         return this;
     }
 
+    /**
+     * Fill zip code create account page.
+     *
+     * @param zipcode the zipcode
+     * @return the create account page
+     */
     public CreateAccountPage fillZipCode(String zipcode){
         helpers.fillTextField(zipcodeInput, zipcode);
         BaseTest.createStep("Ingresando el codigo Postal: " +zipcode, true, true, IMMEDIATE);
         return this;
     }
 
+    /**
+     * Fill mobile phone create account page.
+     *
+     * @param mobilePhone the mobile phone
+     * @return the create account page
+     */
     public CreateAccountPage fillMobilePhone(String mobilePhone){
         helpers.fillTextField(mobileNumberInput, mobilePhone);
         BaseTest.createStep("Ingresando el Numero de telefono movil: " +mobilePhone, true, true, IMMEDIATE);
         return this;
     }
 
+    /**
+     * Click create account button account created page.
+     *
+     * @return the account created page
+     */
     public AccountCreatedPage clickCreateAccountButton() {
         helpers.clickElement(createAccountBtn, "botón para crear cuenta");
         BaseTest.createStep("Haciendo clic en Create Account", true, true, IMMEDIATE);
         return new AccountCreatedPage(driver);
     }
 
+    /**
+     * Test create account page.
+     *
+     * @return the create account page
+     */
     public CreateAccountPage test(){
         helpers.isElementVisible(createAccountBtn, 10);
         return this;

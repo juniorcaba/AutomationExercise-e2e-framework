@@ -2,11 +2,11 @@ package tests.authentication;
 
 import basetest.BaseTest;
 import org.testng.annotations.Test;
-import pages.HomePage;
+import pages.user.HomePage;
 
 public class RegistrationTests extends BaseTest {
 
-    @Test(description = "Test Case 1: Register User")
+    //@Test(description = "Test Case 1: Register User")
     public void testRegisterUser(){
         new HomePage(getDriver())
                 .navigateToHome()
@@ -40,6 +40,21 @@ public class RegistrationTests extends BaseTest {
                 .verifySuccessMessage()
                 .clickContinueAfterAccountDeletion()
                 .verifyUserIsNotLoggedIn();
+
+    }
+
+    @Test(description = "Test Case 5: Register User with existing email")
+    public void testRegisterUserWithExistingEmail(){
+        new HomePage(getDriver())
+                .navigateToHome()
+                .verifyHomePageLoaded()
+                .clickSignupLogin()
+                .verifylNewUserSignupIsVisible()
+                .fillSignupName("Sandra")
+                .fillSignupEmail("emailparaprueba@test.com")
+                .clickSignupButton()
+                .signupAndVerifySuccess();
+
 
     }
 

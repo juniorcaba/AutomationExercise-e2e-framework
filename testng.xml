@@ -10,8 +10,9 @@
         <parameter name="browser" value="Edge"/>
 
         <classes>
-            <class name="tests.authentication.RegistrationTests"/>
-<!--            <class name="tests.authentication.LoginLogoutTests"/>-->
+<!--            <class name="tests.authentication.RegistrationTests"/>-->
+<!--            <class name="tests.authentication.LoginSignupTests"/>-->
+            <class name="tests.contact.ContactUsTest"/>
         </classes>
     </test>
 

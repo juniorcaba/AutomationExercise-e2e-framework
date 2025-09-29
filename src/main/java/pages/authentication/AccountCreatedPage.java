@@ -1,12 +1,13 @@
-package pages;
+package pages.authentication;
 
 import basetest.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import pages.BasePage;
+import pages.user.HomePage;
 import utils.WebHelpers;
 
 import static basetest.BaseTest.StepMode.*;
-import static basetest.BaseTest.BufferAction.*;
 
 public class AccountCreatedPage extends BasePage {
 
