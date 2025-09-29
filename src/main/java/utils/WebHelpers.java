@@ -629,33 +629,23 @@ public class WebHelpers {
      * @param successLocator Localizador del elemento que indica éxito (puede ser null)
      * @param timeoutSeconds Tiempo máximo de espera
      * @param actionDescription Descripción de la acción para logs
-     * @return true si fue exitoso, lanza excepción si hay error
+     * @throws RuntimeException si encuentra un error
      */
-    public boolean validateActionResult(By errorLocator, By successLocator, int timeoutSeconds, String actionDescription) {
+    public void validateActionResult(By errorLocator, By successLocator, int timeoutSeconds, String actionDescription) {
         WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
 
         try {
             if (successLocator != null) {
-                // Esperar por error O éxito
                 shortWait.until(ExpectedConditions.or(
                         ExpectedConditions.visibilityOfElementLocated(errorLocator),
                         ExpectedConditions.visibilityOfElementLocated(successLocator)
                 ));
             } else {
-                // Solo esperar por error
-                try {
-                    shortWait.until(ExpectedConditions.visibilityOfElementLocated(errorLocator));
-                } catch (TimeoutException e) {
-                    // Si no hay error en el tiempo especificado, asumir éxito
-                    return true;
-                }
+                shortWait.until(ExpectedConditions.visibilityOfElementLocated(errorLocator));
             }
         } catch (TimeoutException e) {
-            // Si no aparece nada, asumir éxito
-            return true;
+            return;
         }
-
-        // Verificar si hay error
         List<WebElement> errors = driver.findElements(errorLocator);
         if (!errors.isEmpty() && errors.get(0).isDisplayed()) {
             String errorText = errors.get(0).getText();
@@ -663,8 +653,6 @@ public class WebHelpers {
             BaseTest.processBuffer(COMMIT_MERGED_FAILURE, fullErrorMessage, true);
             throw new RuntimeException(fullErrorMessage);
         }
-
-        return true; // Éxito
     }
 
     /**
@@ -675,7 +663,8 @@ public class WebHelpers {
      * @return true si fue exitoso, lanza excepción si hay error
      */
     public boolean validateActionResult(By errorLocator, int timeoutSeconds, String actionDescription) {
-        return validateActionResult(errorLocator, null, timeoutSeconds, actionDescription);
+        validateActionResult(errorLocator, null, timeoutSeconds, actionDescription);
+        return true;
     }
 
     /**
@@ -685,7 +674,8 @@ public class WebHelpers {
      * @return true si fue exitoso, lanza excepción si hay error
      */
     public boolean validateActionResult(By errorLocator, String actionDescription) {
-        return validateActionResult(errorLocator, null, 2, actionDescription);
+        validateActionResult(errorLocator, null, 2, actionDescription);
+        return true;
     }
 
     /**
@@ -799,6 +789,18 @@ public class WebHelpers {
     public void waitForPageToLoad(By pageIdentifierLocator) {
         waitForPageToLoad(pageIdentifierLocator, 10);
     }
+
+    public boolean isElementPresent(By locator, int timeoutSeconds) {
+        try {
+            WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+            customWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+
 
 // ==================== MANEJO DE ERRORES ====================
 

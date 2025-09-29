@@ -1,12 +1,14 @@
-package pages;
+package pages.user;
 
 import basetest.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import pages.BasePage;
+import pages.contact.ContactUsPage;
 import utils.ConfigReader;
 import utils.WebHelpers;
-import pages.SignupLoginPage;
+import pages.authentication.SignupLoginPage;
 
 import static basetest.BaseTest.StepMode.*;
 import static basetest.BaseTest.BufferAction.*;
@@ -157,10 +159,10 @@ public class HomePage extends BasePage {
      *
      * @return the home page
      */
-    public HomePage clickLogout() {
+    public SignupLoginPage clickLogout() {
         helpers.clickElement(logoutButton, "botón Logout");
         BaseTest.createStep("Haciendo clic en Logout", true, true, IMMEDIATE);
-        return new HomePage(driver); // Retorna a HomePage sin login
+        return new SignupLoginPage(driver); // Retorna a HomePage sin login
     }
 
 
@@ -173,6 +175,12 @@ public class HomePage extends BasePage {
         helpers.clickElement(deleteAccountButton, "botón Delete Account");
         BaseTest.createStep("Haciendo clic en Delete Account", true, true, IMMEDIATE);
         return new DeleteAccountPage(driver);
+    }
+
+    public ContactUsPage clickContactUs() {
+        helpers.clickElement(contactUsPageButton, "botón Contact us");
+        BaseTest.createStep("Haciendo clic en Contact us", true, true, IMMEDIATE);
+        return new ContactUsPage(driver);
     }
 
 
@@ -195,7 +203,6 @@ public class HomePage extends BasePage {
      * @return the home page
      */
     public HomePage verifyUserIsNotLoggedIn() {
-        // Verificar que el mensaje "Logged in as" NO esté presente
         boolean isNotLoggedIn = helpers.verifyElementIsNotVisible(loggedInMessage, 5);
 
         if (isNotLoggedIn) {

@@ -1,12 +1,12 @@
-package pages;
+package pages.user;
 
 import basetest.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import pages.BasePage;
 import utils.WebHelpers;
 
 import static basetest.BaseTest.StepMode.*;
-import static basetest.BaseTest.BufferAction.*;
 
 public class DeleteAccountPage extends BasePage {
 
